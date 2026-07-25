@@ -76,11 +76,7 @@
 
     formatPrice: function(price, currency = null) {
       const curr = currency || this.getCurrency();
-      const symbols = {
-        'INR': '₹',
-        'USD': '$',
-        'EUR': '€'
-      };
+      const symbols = {"INR":"₹","USD":"$","EUR":"€"};
       const sym = symbols[curr] || '';
       return sym + price;
     }

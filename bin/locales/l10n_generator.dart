@@ -47,6 +47,7 @@ String generateL10nScript() {
   }
 
   final dictionaryJson = json.encode(dictionary);
+  final currencySymbolsJson = json.encode(L10nConfig.currencySymbols);
 
   return '''
 (function() {
@@ -115,11 +116,7 @@ String generateL10nScript() {
 
     formatPrice: function(price, currency = null) {
       const curr = currency || this.getCurrency();
-      const symbols = {
-        'INR': '₹',
-        'USD': '\$',
-        'EUR': '€'
-      };
+      const symbols = $currencySymbolsJson;
       const sym = symbols[curr] || '';
       return sym + price;
     }

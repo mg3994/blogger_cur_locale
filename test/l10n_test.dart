@@ -8,8 +8,14 @@ void main() {
       expect(L10nConfig.defaultLocale, equals('en'));
       expect(L10nConfig.fallbackLocale, equals('en'));
       expect(L10nConfig.defaultCurrency, equals('INR'));
+      expect(L10nConfig.fallbackCurrency, equals('INR'));
       expect(L10nConfig.supportedLocales, equals(['en', 'hi', 'fr']));
       expect(L10nConfig.supportedCurrencies, equals(['INR', 'USD', 'EUR']));
+      expect(L10nConfig.currencySymbols, equals({
+        'INR': '₹',
+        'USD': r'$',
+        'EUR': '€',
+      }));
     });
 
     test('L10n Generator parses ARB files and produces JavaScript dictionary', () {
