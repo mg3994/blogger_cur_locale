@@ -13,6 +13,79 @@
 (function() {
   const l10nDictionary = {"en":{"session_settings":"Session Settings","preferences":"Preferences","language_locale":"Language & Locale","preferred_currency":"Preferred Currency","account_uid":"Account USER ID","logout_session":"Logout Session","shopping_bag":"Shopping Bag","total":"Total","confirm_order":"Confirm Order","select_location":"Select Location","detect_location":"Detect My Location","or":"OR","apply":"Apply","find":"Find","search_placeholder":"Service title, keywords, or company","location_placeholder":"City, PIN code","guest_user":"Guest User","workspace_client":"Workspace Client"},"fr":{"session_settings":"Paramètres de session","preferences":"Préférences","language_locale":"Langue & Paramètres régionaux","preferred_currency":"Devise préférée","account_uid":"ID utilisateur du compte","logout_session":"Fermer la session","shopping_bag":"Sac de courses","total":"Total","confirm_order":"Confirmer la commande","select_location":"Sélectionnez l'emplacement","detect_location":"Détecter ma position","or":"OU","apply":"Appliquer","find":"Trouver","search_placeholder":"Titre du service, mots-clés ou entreprise","location_placeholder":"Ville, code PIN","guest_user":"Utilisateur invité","workspace_client":"Client de l'espace de travail"},"hi":{"session_settings":"सत्र सेटिंग्स","preferences":"प्राथमिकताएं","language_locale":"भाषा और स्थानीयकरण","preferred_currency":"पसंदीदा मुद्रा","account_uid":"खाता उपयोगकर्ता आईडी","logout_session":"सत्र समाप्त करें","shopping_bag":"शॉपिंग बैग","total":"कुल","confirm_order":"ऑर्डर की पुष्टि करें","select_location":"स्थान चुनें","detect_location":"मेरा स्थान पता करें","or":"या","apply":"लागू करें","find":"खोजें","search_placeholder":"सेवा शीर्षक, कीवर्ड या कंपनी","location_placeholder":"शहर, पिन कोड","guest_user":"अतिथि उपयोगकर्ता","workspace_client":"कार्यक्षेत्र क्लाइंट"}};
 
+  // Global Localization & Currency Helper for Dynamic Post JSON-LD Schemas
+  window.AntinnaL10nHelper = {
+    getLocale: function() {
+      return localStorage.getItem('antinna-locale') || 'en';
+    },
+
+    getCurrency: function() {
+      return localStorage.getItem('antinna-currency') || 'INR';
+    },
+
+    getLocalizedValue: function(obj, fallbackKey = 'en') {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      const locale = this.getLocale();
+      return obj[locale] || obj[fallbackKey] || Object.values(obj)[0] || '';
+    },
+
+    getLocalizedKeywords: function(schema) {
+      if (!schema || !schema.keywords) return [];
+      const locale = this.getLocale();
+      return schema.keywords[locale] || schema.keywords['en'] || [];
+    },
+
+    getLocalizedPageName: function(schema, pageUrl) {
+      if (!schema || !schema.pages || !schema.pages[pageUrl]) return '';
+      const page = schema.pages[pageUrl];
+      return this.getLocalizedValue(page.name);
+    },
+
+    getPriceSpecifications: function(schema) {
+      const offer = schema.makesOffer || schema;
+      if (!offer || !offer.priceSpecification) return [];
+      const currency = this.getCurrency();
+      return offer.priceSpecification[currency] || [];
+    },
+
+    getShippingDetails: function(schema) {
+      const offer = schema.makesOffer || schema;
+      if (!offer || !offer.shippingDetails) return [];
+
+      const currency = this.getCurrency();
+      const prefixMap = {
+        'USD': 'US',
+        'INR': 'IN',
+        'EUR': 'FR'
+      };
+      const prefix = prefixMap[currency] || 'IN';
+
+      const details = [];
+      for (const [key, val] of Object.entries(offer.shippingDetails)) {
+        if (key.startsWith(prefix)) {
+          if (Array.isArray(val)) {
+            details.push(...val);
+          } else {
+            details.push(val);
+          }
+        }
+      }
+      return details;
+    },
+
+    formatPrice: function(price, currency = null) {
+      const curr = currency || this.getCurrency();
+      const symbols = {
+        'INR': '₹',
+        'USD': '$',
+        'EUR': '€'
+      };
+      const sym = symbols[curr] || '';
+      return sym + price;
+    }
+  };
+
   window.translateDOM = function() {
     const currentLocale = localStorage.getItem('antinna-locale') || 'en';
     const dict = l10nDictionary[currentLocale] || l10nDictionary['en'] || {};
@@ -80,6 +153,13 @@
 
     if (window.updatePrices) {
       window.updatePrices();
+    }
+  };
+
+  window.updatePrices = function() {
+    // Left customizable for you to handle Blog1 content dynamically as you prefer!
+    if (typeof window.onCurrencyOrLocaleChange === 'function') {
+      window.onCurrencyOrLocaleChange();
     }
   };
 

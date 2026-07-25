@@ -235,9 +235,15 @@ The theme automatically injects a global helper class `AntinnaL10nHelper` contai
 
 ---
 
-## 🎨 3. Automatic Reactive Rendering Workflow
+## 🎨 3. Custom Post Render Customization
 
-When a user switches language or currency, the theme utilizes a **high-performance MutationObserver system** that instantly re-renders:
-1. **Dynamic Accents Theme Mode:** Custom CSS classes matching the selected currency are toggled on the root document element (`html.currency-usd`, `html.currency-eur`, `html.currency-inr`), instantly changing theme accent colors dynamically.
-2. **Interactive UI Localizer:** Automatically updates all static text elements containing `data-l10n` or `data-l10n-placeholder` attributes.
-3. **Card and Details Pricing Engine:** Intercepts product feed cards (`.card`) and single details pages, parses their hidden JSON-LD schema, and updates titles, keywords, and prices with zero flickering!
+Instead of enforcing an automatic rendering structure on `Blog1` post elements, the localization system provides:
+1. **Dynamic Theme Accent Switch:** Custom classes (`currency-usd`, `currency-eur`, `currency-inr`) are instantly set on `document.documentElement` to let you style the theme dynamically.
+2. **`updatePrices` Callback hook:** A blank placeholder function `window.updatePrices` is called automatically upon changes, letting you programmatically select, parse, and render elements as you see fit! E.g.:
+   ```javascript
+   window.updatePrices = function() {
+     // Implement your own custom DOM rendering logic for Blog1 post items here!
+     // You can easily use 'window.AntinnaL10nHelper' APIs to help!
+   };
+   ```
+3. **Automatic UI translations:** Translation variables for the core theme elements (like modal headers, drawers, buttons) containing `data-l10n` are managed automatically.

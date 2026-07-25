@@ -112,7 +112,7 @@ String generateL10nScript() {
       const curr = currency || this.getCurrency();
       const symbols = {
         'INR': '₹',
-        'USD': '$',
+        'USD': '\$',
         'EUR': '€'
       };
       const sym = symbols[curr] || '';
@@ -191,98 +191,10 @@ String generateL10nScript() {
   };
 
   window.updatePrices = function() {
-    const helper = window.AntinnaL10nHelper;
-    const currentCurrency = helper.getCurrency();
-
-    // 1. Single Post/Item page update
-    const rawPostEl = document.getElementById('post-body-raw') || document.querySelector('.grid-data');
-    if (rawPostEl) {
-      const ldScripts = document.querySelectorAll('script[type="application/ld+json"]');
-      ldScripts.forEach(script => {
-        try {
-          const schema = JSON.parse(script.textContent);
-
-          // Localize name / title
-          const nameEl = document.getElementById('p-name') || document.querySelector('.post-title');
-          if (nameEl && schema.name) {
-            nameEl.textContent = helper.getLocalizedValue(schema.name);
-          }
-
-          // Localize description
-          const descEl = document.getElementById('p-desc');
-          if (descEl && schema.mainEntity && schema.mainEntity.description) {
-            descEl.textContent = schema.mainEntity.description;
-          }
-
-          // Localize price
-          const specs = helper.getPriceSpecifications(schema);
-          if (specs.length > 0) {
-            const price = specs[0].price;
-            const pPriceEl = document.getElementById('p-price');
-            if (pPriceEl) {
-              pPriceEl.textContent = helper.formatPrice(price, currentCurrency);
-            }
-          }
-
-          // Localize shipping
-          const orderInfoEl = document.getElementById('order-info-list');
-          if (orderInfoEl) {
-            const shippings = helper.getShippingDetails(schema);
-            if (shippings.length > 0) {
-              let html = '';
-              shippings.forEach(ship => {
-                const rate = ship.shippingRate ? helper.formatPrice(ship.shippingRate.value, ship.shippingRate.currency) : '';
-                const destination = ship.shippingDestination ? ship.shippingDestination.addressCountry : '';
-                html += `<div>Shipping to <strong>${destination}</strong>: <strong>${rate}</strong></div>`;
-              });
-              orderInfoEl.innerHTML = html;
-              const orderBox = document.getElementById('p-order-info');
-              if (orderBox) orderBox.style.display = 'block';
-            }
-          }
-        } catch (e) {
-          // Skip malformed
-        }
-      });
+    // Left customizable for you to handle Blog1 content dynamically as you prefer!
+    if (typeof window.onCurrencyOrLocaleChange === 'function') {
+      window.onCurrencyOrLocaleChange();
     }
-
-    // 2. Feed cards update
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      const gridDataEl = card.querySelector('.grid-data');
-      if (gridDataEl) {
-        try {
-          const schema = JSON.parse(gridDataEl.textContent);
-
-          // Localize title
-          const cardTitleEl = card.querySelector('.card-title');
-          if (cardTitleEl && schema.name) {
-            cardTitleEl.textContent = helper.getLocalizedValue(schema.name);
-          }
-
-          // Localize badge with keyword
-          const cardBadgeEl = card.querySelector('.card-badge');
-          if (cardBadgeEl && schema.keywords) {
-            const kws = helper.getLocalizedKeywords(schema);
-            if (kws.length > 0) {
-              cardBadgeEl.textContent = kws[0];
-            }
-          }
-
-          // Localize price
-          const specs = helper.getPriceSpecifications(schema);
-          if (specs.length > 0) {
-            const price = specs[0].price;
-            const cardPriceEl = card.querySelector('.card-price');
-            if (cardPriceEl) {
-              cardPriceEl.textContent = helper.formatPrice(price, currentCurrency);
-            }
-          }
-        } catch (e) {
-          // Skip
-        }
-      }
-    });
   };
 
   // Run on DOMContentLoaded and observe future mutations
