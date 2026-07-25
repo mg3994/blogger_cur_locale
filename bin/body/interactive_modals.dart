@@ -18,7 +18,10 @@ final cart_drawer = Div(
       attributes: {'class': 'cart-header'},
       children: [
         H3(
-          attributes: {'style': 'margin:0;'},
+          attributes: {
+            'style': 'margin:0;',
+            'data-l10n': 'shopping_bag'
+          },
           children: [Text('Shopping Bag')],
         ),
         Button(
@@ -45,7 +48,10 @@ final cart_drawer = Div(
             'style': 'display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-bottom:20px;'
           },
           children: [
-            Span(children: [Text('Total')]),
+            Span(
+              attributes: {'data-l10n': 'total'},
+              children: [Text('Total')],
+            ),
             Span(
               attributes: {'id': 'cart-total-price'},
               children: [Text('--')],
@@ -58,6 +64,7 @@ final cart_drawer = Div(
             'id': 'cart-confirm-btn',
             'onclick': 'window.CartManager.placeOrder()', // or whatever is used
             'style': 'width:100%; padding:18px; font-size:1.1rem; border-radius:12px;',
+            'data-l10n': 'confirm_order',
           },
           children: [Text('Confirm Order')],
         ),
@@ -83,7 +90,10 @@ final loc_modal_backdrop = Div(
         Div(
           attributes: {'class': 'modal-header'},
           children: [
-            H3(children: [Text('Select Location')]),
+            H3(
+              attributes: {'data-l10n': 'select_location'},
+              children: [Text('Select Location')],
+            ),
             P(children: [Text('This helps us show products and services available in your area.')]),
           ],
         ),
@@ -94,13 +104,19 @@ final loc_modal_backdrop = Div(
           },
           children: [
             Span(children: [RawText('🎯')]),
-            Text(' Detect My Location'),
+            Span(
+              attributes: {'data-l10n': 'detect_location'},
+              children: [Text(' Detect My Location')],
+            ),
           ],
         ),
         Div(
           attributes: {'class': 'modal-divider'},
           children: [
-            Span(children: [Text('OR')]),
+            Span(
+              attributes: {'data-l10n': 'or'},
+              children: [Text('OR')],
+            ),
           ],
         ),
         Div(
@@ -117,6 +133,7 @@ final loc_modal_backdrop = Div(
             Button(
               attributes: {
                 'onclick': 'window.LocationRenderer.handleSetPin()',
+                'data-l10n': 'apply',
               },
               children: [Text('Apply')],
             ),

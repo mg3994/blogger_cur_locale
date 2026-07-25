@@ -9,9 +9,15 @@ final user_meta_strings = Div(attributes: {
   'class': 'user-meta-strings',
 }, children: [
   Span(
-      attributes: {'class': 'user-display-name'},
+      attributes: {
+        'class': 'user-display-name',
+        'data-l10n': 'guest_user'
+      },
       children: [Text('Guest User')]),
   Span(
-      attributes: {'class': 'user-display-role'},
+      attributes: {
+        'class': 'user-display-role',
+        'data-l10n': 'workspace_client'
+      },
       children: [Text('Workspace Client')]),
 ]);

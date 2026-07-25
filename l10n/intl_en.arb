@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "session_settings": "Session Settings",
+  "language_locale": "Language & Locale",
+  "preferred_currency": "Preferred Currency",
+  "account_uid": "Account USER ID",
+  "logout_session": "Logout Session",
+  "shopping_bag": "Shopping Bag",
+  "total": "Total",
+  "confirm_order": "Confirm Order",
+  "select_location": "Select Location",
+  "detect_location": "Detect My Location",
+  "or": "OR",
+  "apply": "Apply",
+  "find": "Find",
+  "search_placeholder": "Service title, keywords, or company",
+  "location_placeholder": "City, PIN code",
+  "guest_user": "Guest User",
+  "workspace_client": "Workspace Client"
+}

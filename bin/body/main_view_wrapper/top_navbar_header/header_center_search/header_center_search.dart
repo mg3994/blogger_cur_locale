@@ -49,6 +49,7 @@ final header_center_search = BSection(
                             'id': 'search-q',
                             'name': 'q',
                             'placeholder': 'Service title, keywords, or company',
+                            'data-l10n-placeholder': 'search_placeholder',
                             'type': 'text',
                           },
                         ),
@@ -74,6 +75,7 @@ final header_center_search = BSection(
                             'class': 'search-input-v2',
                             'id': 'loc-display-v2',
                             'placeholder': 'City, PIN code',
+                            'data-l10n-placeholder': 'location_placeholder',
                             'readonly': 'readonly',
                             'type': 'text',
                           },
@@ -85,6 +87,7 @@ final header_center_search = BSection(
                       attributes: {
                         'class': 'search-btn-v2',
                         'type': 'submit',
+                        'data-l10n': 'find',
                       },
                       children: [Text('Find')],
                     ),

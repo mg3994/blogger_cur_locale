@@ -1660,4 +1660,50 @@ html.dark .leaflet-control-layers-toggle, html.dark .leaflet-touch .leaflet-cont
     border: 1px solid var(--border-ui) !important;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
+
+/* ==========================================================================
+   CURRENCY SPECIFIC EMOTION ACCENTS (THEME MODES)
+   ========================================================================== */
+html.currency-inr {
+    --color-accent: #f59e0b; /* Saffron Orange */
+}
+html.dark.currency-inr {
+    --color-accent: #f59e0b;
+}
+
+html.currency-usd {
+    --color-accent: #10b981; /* Money/Emerald Green */
+}
+html.dark.currency-usd {
+    --color-accent: #34d399;
+}
+
+html.currency-eur {
+    --color-accent: #3b82f6; /* Royal Blue */
+}
+html.dark.currency-eur {
+    --color-accent: #60a5fa;
+}
+
+/* Settings Select Styling */
+.settings-select-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-ui);
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 4px;
+}
+.settings-select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    color: var(--text-main);
+    font-family: inherit;
+    cursor: pointer;
+}
 ''', variables: bskin_variables);

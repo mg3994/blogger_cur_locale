@@ -14,7 +14,10 @@ final account_settings_modal_backdrop = Div(
           attributes: {"class": "settings-modal-header"},
           children: [
             Span(
-              attributes: {"class": "settings-modal-title"},
+              attributes: {
+                "class": "settings-modal-title",
+                "data-l10n": "session_settings"
+              },
               children: [Text("Session Settings")],
             ),
             Button(
@@ -97,7 +100,10 @@ final account_settings_modal_backdrop = Div(
               attributes: {"class": "settings-detail-section"},
               children: [
                 Span(
-                  attributes: {"class": "settings-detail-label"},
+                  attributes: {
+                    "class": "settings-detail-label",
+                    "data-l10n": "account_uid"
+                  },
                   children: [Text("Account USER ID")],
                 ),
                 Div(
@@ -146,6 +152,68 @@ final account_settings_modal_backdrop = Div(
                 ),
               ],
             ),
+
+            // Language & Locale select
+            Div(
+              attributes: {"class": "settings-detail-section"},
+              children: [
+                Span(
+                  attributes: {
+                    "class": "settings-detail-label",
+                    "data-l10n": "language_locale"
+                  },
+                  children: [Text("Language & Locale")],
+                ),
+                Div(
+                  attributes: {"class": "settings-select-box"},
+                  children: [
+                    Select(
+                      attributes: {
+                        "id": "language-selector",
+                        "class": "settings-select",
+                        "onchange": "window.setLanguage(this.value)",
+                      },
+                      children: [
+                        Option(attributes: {"value": "en"}, children: [Text("English (EN)")]),
+                        Option(attributes: {"value": "hi"}, children: [Text("हिन्दी (HI)")]),
+                        Option(attributes: {"value": "fr"}, children: [Text("Français (FR)")]),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            // Preferred Currency select
+            Div(
+              attributes: {"class": "settings-detail-section"},
+              children: [
+                Span(
+                  attributes: {
+                    "class": "settings-detail-label",
+                    "data-l10n": "preferred_currency"
+                  },
+                  children: [Text("Preferred Currency")],
+                ),
+                Div(
+                  attributes: {"class": "settings-select-box"},
+                  children: [
+                    Select(
+                      attributes: {
+                        "id": "currency-selector",
+                        "class": "settings-select",
+                        "onchange": "window.setCurrency(this.value)",
+                      },
+                      children: [
+                        Option(attributes: {"value": "INR"}, children: [Text("INR (₹)")]),
+                        Option(attributes: {"value": "USD"}, children: [Text(r"USD ($)")]),
+                        Option(attributes: {"value": "EUR"}, children: [Text("EUR (€)")]),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
         //
@@ -185,7 +253,10 @@ final account_settings_modal_backdrop = Div(
                   ],
                 ),
                 //  <span>Logout Session</span>
-                Span(children: [Text("Logout Session")]),
+                Span(
+                  attributes: {"data-l10n": "logout_session"},
+                  children: [Text("Logout Session")],
+                ),
               ],
             ),
           ],

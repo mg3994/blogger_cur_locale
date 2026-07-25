@@ -1,0 +1,20 @@
+{
+  "@@locale": "hi",
+  "session_settings": "सत्र सेटिंग्स",
+  "language_locale": "भाषा और स्थानीयकरण",
+  "preferred_currency": "पसंदीदा मुद्रा",
+  "account_uid": "खाता उपयोगकर्ता आईडी",
+  "logout_session": "सत्र समाप्त करें",
+  "shopping_bag": "शॉपिंग बैग",
+  "total": "कुल",
+  "confirm_order": "ऑर्डर की पुष्टि करें",
+  "select_location": "स्थान चुनें",
+  "detect_location": "मेरा स्थान पता करें",
+  "or": "या",
+  "apply": "लागू करें",
+  "find": "खोजें",
+  "search_placeholder": "सेवा शीर्षक, कीवर्ड या कंपनी",
+  "location_placeholder": "शहर, पिन कोड",
+  "guest_user": "अतिथि उपयोगकर्ता",
+  "workspace_client": "कार्यक्षेत्र क्लाइंट"
+}
