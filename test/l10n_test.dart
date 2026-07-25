@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:test/test.dart';
 import '../bin/locales/config.dart';
 import '../bin/locales/l10n_generator.dart';
@@ -62,6 +63,22 @@ void main() {
       // Ensure Text Direction / RTL support exists
       expect(jsScript, contains('const rtlLocales = ['));
       expect(jsScript, contains('document.documentElement.setAttribute(\'dir\', \'rtl\')'));
+
+      // Ensure all AntinnaL10nHelper methods from the documentation are fully implemented
+      expect(jsScript, contains('getLocalizedValue: function(obj'));
+      expect(jsScript, contains('getLocalizedKeywords: function(schema'));
+      expect(jsScript, contains('getLocalizedPageName: function(schema'));
+      expect(jsScript, contains('getPriceSpecifications: function(schema'));
+      expect(jsScript, contains('getShippingDetails: function(schema'));
+
+      // Ensure Dart Flutter-style AppLocalizations class is generated
+      final dartL10nFile = File('bin/locales/app_localizations.dart');
+      expect(dartL10nFile.existsSync(), isTrue);
+      final dartContent = dartL10nFile.readAsStringSync();
+      expect(dartContent, contains('class L10nText extends Component'));
+      expect(dartContent, contains('class AppLocalizations'));
+      expect(dartContent, contains('Component get session_settings'));
+      expect(dartContent, contains('Component get preferences'));
     });
   });
 }

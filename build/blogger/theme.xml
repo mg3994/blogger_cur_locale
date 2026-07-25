@@ -89,7 +89,7 @@
     },
 
 
-    // ICU Message recursive parser
+    // ICU Message recursive parser supporting variables, plurals, and selects
     formatMessage: function(msg, vars = {}) {
       if (typeof msg !== 'string') return '';
 
@@ -233,23 +233,90 @@
     }
   };
 
-  // Helper backward-compatibility reference
+  // Helper backward-compatibility reference and custom JSON-LD schema parsing
   window.AntinnaL10nHelper = {
-    getLocale: function() { return window.AppLocalizations.getLocale(); },
-    getCurrency: function() { return window.AppLocalizations.getCurrency(); },
-    formatPrice: function(price, currency = null) { return window.AppLocalizations.formatCurrency(price, currency); }
+    getLocale: function() {
+      return window.AppLocalizations.getLocale();
+    },
+
+    getCurrency: function() {
+      return window.AppLocalizations.getCurrency();
+    },
+
+    getLocalizedValue: function(obj, fallbackKey = 'en') {
+      if (!obj) return '';
+      if (typeof obj === 'string') return obj;
+      const locale = this.getLocale();
+      return obj[locale] || obj[fallbackKey] || Object.values(obj)[0] || '';
+    },
+
+    getLocalizedKeywords: function(schema) {
+      if (!schema || !schema.keywords) return [];
+      const locale = this.getLocale();
+      return schema.keywords[locale] || schema.keywords['en'] || [];
+    },
+
+    getLocalizedPageName: function(schema, pageUrl) {
+      if (!schema || !schema.pages || !schema.pages[pageUrl]) return '';
+      const page = schema.pages[pageUrl];
+      return this.getLocalizedValue(page.name);
+    },
+
+    getPriceSpecifications: function(schema) {
+      const offer = schema.makesOffer || schema;
+      if (!offer || !offer.priceSpecification) return [];
+      const currency = this.getCurrency();
+      return offer.priceSpecification[currency] || [];
+    },
+
+    getShippingDetails: function(schema) {
+      const offer = schema.makesOffer || schema;
+      if (!offer || !offer.shippingDetails) return [];
+
+      const currency = this.getCurrency();
+      const prefixMap = {
+        'USD': 'US',
+        'INR': 'IN',
+        'EUR': 'FR'
+      };
+      const prefix = prefixMap[currency] || 'IN';
+
+      const details = [];
+      for (const [key, val] of Object.entries(offer.shippingDetails)) {
+        if (key.startsWith(prefix)) {
+          if (Array.isArray(val)) {
+            details.push(...val);
+          } else {
+            details.push(val);
+          }
+        }
+      }
+      return details;
+    },
+
+    formatPrice: function(price, currency = null) {
+      return window.AppLocalizations.formatCurrency(price, currency);
+    }
   };
 
   window.translateDOM = function() {
     const currentLocale = localStorage.getItem('antinna-locale') || 'en';
     const dict = l10nDictionary[currentLocale] || l10nDictionary['en'] || {};
 
-    // 1. Translate elements with data-l10n
+    // 1. Translate elements with data-l10n and data-l10n-vars
     document.querySelectorAll('[data-l10n]').forEach(el => {
       const key = el.getAttribute('data-l10n');
       if (dict[key]) {
-        if (el.textContent !== dict[key]) {
-          el.textContent = dict[key];
+        let vars = {};
+        const varsAttr = el.getAttribute('data-l10n-vars');
+        if (varsAttr) {
+          try {
+            vars = JSON.parse(varsAttr);
+          } catch(e) {}
+        }
+        const translated = window.AppLocalizations.formatMessage(dict[key], vars);
+        if (el.textContent !== translated) {
+          el.textContent = translated;
         }
       }
     });
@@ -288,7 +355,6 @@
     localStorage.setItem('antinna-locale', lang);
     document.documentElement.setAttribute('lang', lang);
 
-    // Automatic RTL text direction layout support
     if (rtlLocales.indexOf(lang) !== -1) {
       document.documentElement.setAttribute('dir', 'rtl');
     } else {
@@ -302,7 +368,6 @@
     localStorage.setItem('antinna-currency', curr);
     const htmlEl = document.documentElement;
 
-    // Clean old currency classes
     const classesToRemove = [];
     htmlEl.classList.forEach(cls => {
       if (cls.startsWith('currency-')) {
@@ -319,7 +384,6 @@
   };
 
   window.updatePrices = function() {
-    // Left customizable for you to handle Blog1 content dynamically as you prefer!
     if (typeof window.onCurrencyOrLocaleChange === 'function') {
       window.onCurrencyOrLocaleChange();
     }
