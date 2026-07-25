@@ -6,7 +6,10 @@ void main() {
   group('Blogger Theme Internationalization Tests', () {
     test('Default values configuration is defined correctly', () {
       expect(L10nConfig.defaultLocale, equals('en'));
+      expect(L10nConfig.fallbackLocale, equals('en'));
       expect(L10nConfig.defaultCurrency, equals('INR'));
+      expect(L10nConfig.supportedLocales, equals(['en', 'hi', 'fr']));
+      expect(L10nConfig.supportedCurrencies, equals(['INR', 'USD', 'EUR']));
     });
 
     test('L10n Generator parses ARB files and produces JavaScript dictionary', () {

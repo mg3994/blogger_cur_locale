@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart' as p;
+import 'config.dart';
 
 /// Generates the client-side JavaScript localization dictionary and helpers.
 String generateL10nScript() {
@@ -17,15 +18,19 @@ String generateL10nScript() {
           final data = json.decode(content);
           if (data is Map) {
             final locale = data['@@locale'] ?? name.replaceAll('intl_', '').replaceAll('.arb', '');
-            final Map<String, String> translations = {};
-            for (final entry in data.entries) {
-              final key = entry.key;
-              final value = entry.value;
-              if (!key.startsWith('@') && value is String) {
-                translations[key] = value;
+
+            // Only process if it is in our configured supported locales list
+            if (L10nConfig.supportedLocales.contains(locale)) {
+              final Map<String, String> translations = {};
+              for (final entry in data.entries) {
+                final key = entry.key;
+                final value = entry.value;
+                if (!key.startsWith('@') && value is String) {
+                  translations[key] = value;
+                }
               }
+              dictionary[locale] = translations;
             }
-            dictionary[locale] = translations;
           }
         } catch (e) {
           print('Warning: Failed to parse ARB file ${file.path}: $e');
@@ -34,9 +39,9 @@ String generateL10nScript() {
     }
   }
 
-  // Ensure 'en' fallback is present if dictionary is empty
+  // Ensure default/fallback locale is present in dictionary
   if (dictionary.isEmpty) {
-    dictionary['en'] = {
+    dictionary[L10nConfig.fallbackLocale] = {
       'session_settings': 'Session Settings',
     };
   }
@@ -50,14 +55,14 @@ String generateL10nScript() {
   // Global Localization & Currency Helper for Dynamic Post JSON-LD Schemas
   window.AntinnaL10nHelper = {
     getLocale: function() {
-      return localStorage.getItem('antinna-locale') || 'en';
+      return localStorage.getItem('antinna-locale') || '${L10nConfig.defaultLocale}';
     },
 
     getCurrency: function() {
-      return localStorage.getItem('antinna-currency') || 'INR';
+      return localStorage.getItem('antinna-currency') || '${L10nConfig.defaultCurrency}';
     },
 
-    getLocalizedValue: function(obj, fallbackKey = 'en') {
+    getLocalizedValue: function(obj, fallbackKey = '${L10nConfig.fallbackLocale}') {
       if (!obj) return '';
       if (typeof obj === 'string') return obj;
       const locale = this.getLocale();
@@ -67,7 +72,7 @@ String generateL10nScript() {
     getLocalizedKeywords: function(schema) {
       if (!schema || !schema.keywords) return [];
       const locale = this.getLocale();
-      return schema.keywords[locale] || schema.keywords['en'] || [];
+      return schema.keywords[locale] || schema.keywords['${L10nConfig.fallbackLocale}'] || [];
     },
 
     getLocalizedPageName: function(schema, pageUrl) {
@@ -121,8 +126,8 @@ String generateL10nScript() {
   };
 
   window.translateDOM = function() {
-    const currentLocale = localStorage.getItem('antinna-locale') || 'en';
-    const dict = l10nDictionary[currentLocale] || l10nDictionary['en'] || {};
+    const currentLocale = localStorage.getItem('antinna-locale') || '${L10nConfig.defaultLocale}';
+    const dict = l10nDictionary[currentLocale] || l10nDictionary['${L10nConfig.fallbackLocale}'] || {};
 
     // 1. Translate elements with data-l10n
     document.querySelectorAll('[data-l10n]').forEach(el => {
@@ -154,7 +159,7 @@ String generateL10nScript() {
     });
 
     // 4. Sync currency selector values (both modal and sidebar)
-    const currentCurrency = localStorage.getItem('antinna-currency') || 'INR';
+    const currentCurrency = localStorage.getItem('antinna-currency') || '${L10nConfig.defaultCurrency}';
     const currSelectors = ['currency-selector', 'sidebar-currency-selector'];
     currSelectors.forEach(id => {
       const select = document.getElementById(id);
