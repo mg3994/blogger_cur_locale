@@ -1,6 +1,7 @@
 {
   "@@locale": "hi",
   "session_settings": "सत्र सेटिंग्स",
+  "preferences": "प्राथमिकताएं",
   "language_locale": "भाषा और स्थानीयकरण",
   "preferred_currency": "पसंदीदा मुद्रा",
   "account_uid": "खाता उपयोगकर्ता आईडी",

@@ -21,10 +21,13 @@ void main() {
       expect(jsScript, contains('"session_settings"'));
       expect(jsScript, contains('"preferred_currency"'));
       expect(jsScript, contains('"logout_session"'));
+      expect(jsScript, contains('"preferences"'));
 
       // Ensure specific translations exist
       expect(jsScript, contains('सत्र सेटिंग्स')); // Hindi translation for session_settings
+      expect(jsScript, contains('प्राथमिकताएं')); // Hindi translation for preferences
       expect(jsScript, contains('Paramètres de session')); // French translation for session_settings
+      expect(jsScript, contains('Préférences')); // French translation for preferences
 
       // Ensure translation helpers are declared
       expect(jsScript, contains('window.translateDOM = function()'));

@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "session_settings": "Session Settings",
+  "preferences": "Preferences",
   "language_locale": "Language & Locale",
   "preferred_currency": "Preferred Currency",
   "account_uid": "Account USER ID",

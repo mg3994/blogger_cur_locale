@@ -71,18 +71,24 @@ String generateL10nScript() {
       }
     });
 
-    // 3. Sync language selector value
-    const langSelect = document.getElementById('language-selector');
-    if (langSelect && langSelect.value !== currentLocale) {
-      langSelect.value = currentLocale;
-    }
+    // 3. Sync language selector values (both modal and sidebar)
+    const langSelectors = ['language-selector', 'sidebar-language-selector'];
+    langSelectors.forEach(id => {
+      const select = document.getElementById(id);
+      if (select && select.value !== currentLocale) {
+        select.value = currentLocale;
+      }
+    });
 
-    // 4. Sync currency selector value
+    // 4. Sync currency selector values (both modal and sidebar)
     const currentCurrency = localStorage.getItem('antinna-currency') || 'INR';
-    const currSelect = document.getElementById('currency-selector');
-    if (currSelect && currSelect.value !== currentCurrency) {
-      currSelect.value = currentCurrency;
-    }
+    const currSelectors = ['currency-selector', 'sidebar-currency-selector'];
+    currSelectors.forEach(id => {
+      const select = document.getElementById(id);
+      if (select && select.value !== currentCurrency) {
+        select.value = currentCurrency;
+      }
+    });
   };
 
   window.setLanguage = function(lang) {
