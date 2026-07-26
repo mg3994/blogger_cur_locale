@@ -53,7 +53,6 @@ String generateL10nScript() {
   _generateDartAppLocalizations(defaultTranslations);
 
   final dictionaryJson = json.encode(dictionary);
-  final currencySymbolsJson = json.encode(L10nConfig.currencySymbols);
 
   // Generate type-safe named JS methods on AppLocalizations for each key
   final StringBuffer jsMethods = StringBuffer();
@@ -234,70 +233,11 @@ $jsMethods
     }
   };
 
-  // Helper backward-compatibility reference and custom JSON-LD schema parsing
+  // Helper backward-compatibility reference
   window.AntinnaL10nHelper = {
-    getLocale: function() {
-      return window.AppLocalizations.getLocale();
-    },
-
-    getCurrency: function() {
-      return window.AppLocalizations.getCurrency();
-    },
-
-    getLocalizedValue: function(obj, fallbackKey = '${L10nConfig.fallbackLocale}') {
-      if (!obj) return '';
-      if (typeof obj === 'string') return obj;
-      const locale = this.getLocale();
-      return obj[locale] || obj[fallbackKey] || Object.values(obj)[0] || '';
-    },
-
-    getLocalizedKeywords: function(schema) {
-      if (!schema || !schema.keywords) return [];
-      const locale = this.getLocale();
-      return schema.keywords[locale] || schema.keywords['${L10nConfig.fallbackLocale}'] || [];
-    },
-
-    getLocalizedPageName: function(schema, pageUrl) {
-      if (!schema || !schema.pages || !schema.pages[pageUrl]) return '';
-      const page = schema.pages[pageUrl];
-      return this.getLocalizedValue(page.name);
-    },
-
-    getPriceSpecifications: function(schema) {
-      const offer = schema.makesOffer || schema;
-      if (!offer || !offer.priceSpecification) return [];
-      const currency = this.getCurrency();
-      return offer.priceSpecification[currency] || [];
-    },
-
-    getShippingDetails: function(schema) {
-      const offer = schema.makesOffer || schema;
-      if (!offer || !offer.shippingDetails) return [];
-
-      const currency = this.getCurrency();
-      const prefixMap = {
-        'USD': 'US',
-        'INR': 'IN',
-        'EUR': 'FR'
-      };
-      const prefix = prefixMap[currency] || 'IN';
-
-      const details = [];
-      for (const [key, val] of Object.entries(offer.shippingDetails)) {
-        if (key.startsWith(prefix)) {
-          if (Array.isArray(val)) {
-            details.push(...val);
-          } else {
-            details.push(val);
-          }
-        }
-      }
-      return details;
-    },
-
-    formatPrice: function(price, currency = null) {
-      return window.AppLocalizations.formatCurrency(price, currency);
-    }
+    getLocale: function() { return window.AppLocalizations.getLocale(); },
+    getCurrency: function() { return window.AppLocalizations.getCurrency(); },
+    formatPrice: function(price, currency = null) { return window.AppLocalizations.formatCurrency(price, currency); }
   };
 
   window.translateDOM = function() {
@@ -363,6 +303,11 @@ $jsMethods
     }
 
     window.translateDOM();
+
+    // Callback hook for custom user logic
+    if (typeof window.onCurrencyOrLocaleChange === 'function') {
+      window.onCurrencyOrLocaleChange();
+    }
   };
 
   window.setCurrency = function(curr) {
@@ -379,12 +324,7 @@ $jsMethods
 
     htmlEl.classList.add('currency-' + curr.toLowerCase());
 
-    if (window.updatePrices) {
-      window.updatePrices();
-    }
-  };
-
-  window.updatePrices = function() {
+    // Callback hook for custom user logic
     if (typeof window.onCurrencyOrLocaleChange === 'function') {
       window.onCurrencyOrLocaleChange();
     }
@@ -393,15 +333,12 @@ $jsMethods
   // Run on DOMContentLoaded and observe future mutations
   document.addEventListener('DOMContentLoaded', () => {
     window.translateDOM();
-    if (window.updatePrices) {
-      window.updatePrices();
+    if (typeof window.onCurrencyOrLocaleChange === 'function') {
+      window.onCurrencyOrLocaleChange();
     }
 
     const observer = new MutationObserver(() => {
       window.translateDOM();
-      if (window.updatePrices) {
-        window.updatePrices();
-      }
     });
     observer.observe(document.body, { childList: true, subtree: true });
   });

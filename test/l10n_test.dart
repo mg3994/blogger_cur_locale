@@ -64,12 +64,6 @@ void main() {
       expect(jsScript, contains('const rtlLocales = ['));
       expect(jsScript, contains('document.documentElement.setAttribute(\'dir\', \'rtl\')'));
 
-      // Ensure all AntinnaL10nHelper methods from the documentation are fully implemented
-      expect(jsScript, contains('getLocalizedValue: function(obj'));
-      expect(jsScript, contains('getLocalizedKeywords: function(schema'));
-      expect(jsScript, contains('getLocalizedPageName: function(schema'));
-      expect(jsScript, contains('getPriceSpecifications: function(schema'));
-      expect(jsScript, contains('getShippingDetails: function(schema'));
 
       // Ensure Dart Flutter-style AppLocalizations class is generated
       final dartL10nFile = File('bin/locales/app_localizations.dart');
