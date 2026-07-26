@@ -71,8 +71,10 @@ void main() {
       final dartContent = dartL10nFile.readAsStringSync();
       expect(dartContent, contains('class L10nText extends Component'));
       expect(dartContent, contains('class AppLocalizations'));
-      expect(dartContent, contains('Component get session_settings'));
-      expect(dartContent, contains('Component get preferences'));
+      expect(dartContent, contains('String get session_settings'));
+      expect(dartContent, contains('Component get session_settingsComponent'));
+      expect(dartContent, contains('String get preferences'));
+      expect(dartContent, contains('Component get preferencesComponent'));
     });
   });
 }
