@@ -1,4 +1,5 @@
 import 'package:blogger_theme/blogger_theme.dart';
+import '../../../../locales/app_localizations.dart';
 
 final header_center_search = BSection(
   id: 'header-search',
@@ -87,9 +88,8 @@ final header_center_search = BSection(
                       attributes: {
                         'class': 'search-btn-v2',
                         'type': 'submit',
-                        'data-l10n': 'find',
                       },
-                      children: [Text('Find')],
+                      children: [AppLocalizations.current.findComponent],
                     ),
                   ],
                 ),

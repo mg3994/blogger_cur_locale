@@ -1,4 +1,5 @@
 import 'package:blogger_theme/blogger_theme.dart';
+import '../../../../locales/app_localizations.dart';
 
 final sidebar_l10n_area = Div(
   attributes: {'class': 'sidebar-l10n-area'},
@@ -12,8 +13,7 @@ final sidebar_l10n_area = Div(
           },
           children: [
             Span(
-              attributes: {'data-l10n': 'preferences'},
-              children: [Text('Preferences')],
+              children: [AppLocalizations.current.preferencesComponent],
             ),
           ],
         ),
@@ -25,9 +25,8 @@ final sidebar_l10n_area = Div(
             Span(
               attributes: {
                 'style': 'font-size: 0.75rem; color: var(--text-muted); font-weight: 600;',
-                'data-l10n': 'language_locale'
               },
-              children: [Text('Language & Locale')],
+              children: [AppLocalizations.current.language_localeComponent],
             ),
             Div(
               attributes: {
@@ -59,9 +58,8 @@ final sidebar_l10n_area = Div(
             Span(
               attributes: {
                 'style': 'font-size: 0.75rem; color: var(--text-muted); font-weight: 600;',
-                'data-l10n': 'preferred_currency'
               },
-              children: [Text('Preferred Currency')],
+              children: [AppLocalizations.current.preferred_currencyComponent],
             ),
             Div(
               attributes: {

@@ -1,4 +1,5 @@
 import 'package:blogger_theme/blogger_theme.dart';
+import '../locales/app_localizations.dart';
 
 final cart_modal_backdrop = Div(
   attributes: {
@@ -20,9 +21,8 @@ final cart_drawer = Div(
         H3(
           attributes: {
             'style': 'margin:0;',
-            'data-l10n': 'shopping_bag'
           },
-          children: [Text('Shopping Bag')],
+          children: [AppLocalizations.current.shopping_bagComponent],
         ),
         Button(
           attributes: {
@@ -49,8 +49,7 @@ final cart_drawer = Div(
           },
           children: [
             Span(
-              attributes: {'data-l10n': 'total'},
-              children: [Text('Total')],
+                  children: [AppLocalizations.current.totalComponent],
             ),
             Span(
               attributes: {'id': 'cart-total-price'},
@@ -64,9 +63,8 @@ final cart_drawer = Div(
             'id': 'cart-confirm-btn',
             'onclick': 'window.CartManager.placeOrder()', // or whatever is used
             'style': 'width:100%; padding:18px; font-size:1.1rem; border-radius:12px;',
-            'data-l10n': 'confirm_order',
           },
-          children: [Text('Confirm Order')],
+              children: [AppLocalizations.current.confirm_orderComponent],
         ),
       ],
     ),
@@ -91,8 +89,7 @@ final loc_modal_backdrop = Div(
           attributes: {'class': 'modal-header'},
           children: [
             H3(
-              attributes: {'data-l10n': 'select_location'},
-              children: [Text('Select Location')],
+              children: [AppLocalizations.current.select_locationComponent],
             ),
             P(children: [Text('This helps us show products and services available in your area.')]),
           ],
@@ -105,8 +102,7 @@ final loc_modal_backdrop = Div(
           children: [
             Span(children: [RawText('🎯')]),
             Span(
-              attributes: {'data-l10n': 'detect_location'},
-              children: [Text(' Detect My Location')],
+              children: [AppLocalizations.current.detect_locationComponent],
             ),
           ],
         ),
@@ -114,8 +110,7 @@ final loc_modal_backdrop = Div(
           attributes: {'class': 'modal-divider'},
           children: [
             Span(
-              attributes: {'data-l10n': 'or'},
-              children: [Text('OR')],
+              children: [AppLocalizations.current.orComponent],
             ),
           ],
         ),
@@ -133,9 +128,8 @@ final loc_modal_backdrop = Div(
             Button(
               attributes: {
                 'onclick': 'window.LocationRenderer.handleSetPin()',
-                'data-l10n': 'apply',
               },
-              children: [Text('Apply')],
+              children: [AppLocalizations.current.applyComponent],
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 // <!-- Account Settings Modal Dialog -->
 import 'package:blogger_theme/blogger_theme.dart';
+import '../../locales/app_localizations.dart';
 
 final account_settings_modal_backdrop = Div(
   attributes: {
@@ -14,11 +15,8 @@ final account_settings_modal_backdrop = Div(
           attributes: {"class": "settings-modal-header"},
           children: [
             Span(
-              attributes: {
-                "class": "settings-modal-title",
-                "data-l10n": "session_settings"
-              },
-              children: [Text("Session Settings")],
+              attributes: {"class": "settings-modal-title"},
+              children: [AppLocalizations.current.session_settingsComponent],
             ),
             Button(
               attributes: {
@@ -100,11 +98,8 @@ final account_settings_modal_backdrop = Div(
               attributes: {"class": "settings-detail-section"},
               children: [
                 Span(
-                  attributes: {
-                    "class": "settings-detail-label",
-                    "data-l10n": "account_uid"
-                  },
-                  children: [Text("Account USER ID")],
+                  attributes: {"class": "settings-detail-label"},
+                  children: [AppLocalizations.current.account_uidComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-uid-box"},
@@ -158,11 +153,8 @@ final account_settings_modal_backdrop = Div(
               attributes: {"class": "settings-detail-section"},
               children: [
                 Span(
-                  attributes: {
-                    "class": "settings-detail-label",
-                    "data-l10n": "language_locale"
-                  },
-                  children: [Text("Language & Locale")],
+                  attributes: {"class": "settings-detail-label"},
+                  children: [AppLocalizations.current.language_localeComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-select-box"},
@@ -189,11 +181,8 @@ final account_settings_modal_backdrop = Div(
               attributes: {"class": "settings-detail-section"},
               children: [
                 Span(
-                  attributes: {
-                    "class": "settings-detail-label",
-                    "data-l10n": "preferred_currency"
-                  },
-                  children: [Text("Preferred Currency")],
+                  attributes: {"class": "settings-detail-label"},
+                  children: [AppLocalizations.current.preferred_currencyComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-select-box"},
@@ -254,8 +243,7 @@ final account_settings_modal_backdrop = Div(
                 ),
                 //  <span>Logout Session</span>
                 Span(
-                  attributes: {"data-l10n": "logout_session"},
-                  children: [Text("Logout Session")],
+                  children: [AppLocalizations.current.logout_sessionComponent],
                 ),
               ],
             ),
