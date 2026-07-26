@@ -1,8 +1,8 @@
 import 'package:blogger_theme/blogger_theme.dart';
-import '../../../../locales/app_localizations.dart';
+import '../../../../i18n/app_internationalization.dart';
 
-final sidebar_l10n_area = Div(
-  attributes: {'class': 'sidebar-l10n-area'},
+final sidebar_i18n_area = Div(
+  attributes: {'class': 'sidebar-i18n-area'},
   children: [
     Div(
       attributes: {'class': 'module-wrapper'},
@@ -13,7 +13,7 @@ final sidebar_l10n_area = Div(
           },
           children: [
             Span(
-              children: [AppLocalizations.current.preferencesComponent],
+              children: [AppI18n.current.preferencesComponent],
             ),
           ],
         ),
@@ -26,7 +26,7 @@ final sidebar_l10n_area = Div(
               attributes: {
                 'style': 'font-size: 0.75rem; color: var(--text-muted); font-weight: 600;',
               },
-              children: [AppLocalizations.current.language_localeComponent],
+              children: [AppI18n.current.language_localeComponent],
             ),
             Div(
               attributes: {
@@ -59,7 +59,7 @@ final sidebar_l10n_area = Div(
               attributes: {
                 'style': 'font-size: 0.75rem; color: var(--text-muted); font-weight: 600;',
               },
-              children: [AppLocalizations.current.preferred_currencyComponent],
+              children: [AppI18n.current.preferred_currencyComponent],
             ),
             Div(
               attributes: {

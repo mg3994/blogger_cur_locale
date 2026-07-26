@@ -1,3 +1,3 @@
 export 'theme.dart';
-export 'l10n_init.dart';
-export 'l10n_script.dart';
+export 'i18n_init.dart';
+export 'i18n_script.dart';

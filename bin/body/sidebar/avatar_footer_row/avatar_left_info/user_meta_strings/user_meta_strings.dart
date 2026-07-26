@@ -4,7 +4,7 @@
 //                     </div>
 
 import 'package:blogger_theme/blogger_theme.dart';
-import '../../../../../locales/app_localizations.dart';
+import '../../../../../i18n/app_internationalization.dart';
 
 final user_meta_strings = Div(attributes: {
   'class': 'user-meta-strings',
@@ -13,10 +13,10 @@ final user_meta_strings = Div(attributes: {
       attributes: {
         'class': 'user-display-name',
       },
-      children: [AppLocalizations.current.guest_userComponent]),
+      children: [AppI18n.current.guest_userComponent]),
   Span(
       attributes: {
         'class': 'user-display-role',
       },
-      children: [AppLocalizations.current.workspace_clientComponent]),
+      children: [AppI18n.current.workspace_clientComponent]),
 ]);

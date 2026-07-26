@@ -1,6 +1,6 @@
 // <!-- Account Settings Modal Dialog -->
 import 'package:blogger_theme/blogger_theme.dart';
-import '../../locales/app_localizations.dart';
+import '../../i18n/app_internationalization.dart';
 
 final account_settings_modal_backdrop = Div(
   attributes: {
@@ -16,7 +16,7 @@ final account_settings_modal_backdrop = Div(
           children: [
             Span(
               attributes: {"class": "settings-modal-title"},
-              children: [AppLocalizations.current.session_settingsComponent],
+              children: [AppI18n.current.session_settingsComponent],
             ),
             Button(
               attributes: {
@@ -99,7 +99,7 @@ final account_settings_modal_backdrop = Div(
               children: [
                 Span(
                   attributes: {"class": "settings-detail-label"},
-                  children: [AppLocalizations.current.account_uidComponent],
+                  children: [AppI18n.current.account_uidComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-uid-box"},
@@ -154,7 +154,7 @@ final account_settings_modal_backdrop = Div(
               children: [
                 Span(
                   attributes: {"class": "settings-detail-label"},
-                  children: [AppLocalizations.current.language_localeComponent],
+                  children: [AppI18n.current.language_localeComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-select-box"},
@@ -182,7 +182,7 @@ final account_settings_modal_backdrop = Div(
               children: [
                 Span(
                   attributes: {"class": "settings-detail-label"},
-                  children: [AppLocalizations.current.preferred_currencyComponent],
+                  children: [AppI18n.current.preferred_currencyComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-select-box"},
@@ -243,7 +243,7 @@ final account_settings_modal_backdrop = Div(
                 ),
                 //  <span>Logout Session</span>
                 Span(
-                  children: [AppLocalizations.current.logout_sessionComponent],
+                  children: [AppI18n.current.logout_sessionComponent],
                 ),
               ],
             ),

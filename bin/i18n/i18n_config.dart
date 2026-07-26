@@ -1,11 +1,11 @@
-class L10nConfig {
-  /// The default locale for the theme.
+class I18nConfig {
+  /// The default locale for the theme (e.g., 'en', 'hi', 'fr').
   static const String defaultLocale = 'en';
 
   /// The fallback locale if a translation is missing.
   static const String fallbackLocale = 'en';
 
-  /// The default currency for the theme.
+  /// The default currency for the theme (e.g., 'INR', 'USD', 'EUR').
   static const String defaultCurrency = 'INR';
 
   /// The fallback currency if a currency specification is missing.

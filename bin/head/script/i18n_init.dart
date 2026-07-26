@@ -1,12 +1,12 @@
 import 'package:blogger_theme/blogger_theme.dart';
-import '../../locales/config.dart';
+import '../../i18n/i18n_config.dart';
 
-final l10nInitScript = Script(
+final i18nInitScript = Script(
   type: 'text/javascript',
   childrenz: [
     Text('(function() {\n'),
-    Text("  var defaultLocale = '${L10nConfig.defaultLocale}';\n"),
-    Text("  var defaultCurrency = '${L10nConfig.defaultCurrency}';\n"),
+    Text("  var defaultLocale = '${I18nConfig.defaultLocale}';\n"),
+    Text("  var defaultCurrency = '${I18nConfig.defaultCurrency}';\n"),
     Text("  var cachedLocale = localStorage.getItem('antinna-locale') || defaultLocale;\n"),
     Text("  var cachedCurrency = localStorage.getItem('antinna-currency') || defaultCurrency;\n"),
     Text("  localStorage.setItem('antinna-locale', cachedLocale);\n"),
