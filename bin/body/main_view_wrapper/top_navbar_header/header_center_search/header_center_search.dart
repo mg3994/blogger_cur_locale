@@ -1,4 +1,5 @@
 import 'package:blogger_theme/blogger_theme.dart';
+import '../../../../locales/app_localizations.dart';
 
 final header_center_search = BSection(
   id: 'header-search',
@@ -49,6 +50,7 @@ final header_center_search = BSection(
                             'id': 'search-q',
                             'name': 'q',
                             'placeholder': 'Service title, keywords, or company',
+                            'data-l10n-placeholder': 'search_placeholder',
                             'type': 'text',
                           },
                         ),
@@ -74,6 +76,7 @@ final header_center_search = BSection(
                             'class': 'search-input-v2',
                             'id': 'loc-display-v2',
                             'placeholder': 'City, PIN code',
+                            'data-l10n-placeholder': 'location_placeholder',
                             'readonly': 'readonly',
                             'type': 'text',
                           },
@@ -86,7 +89,7 @@ final header_center_search = BSection(
                         'class': 'search-btn-v2',
                         'type': 'submit',
                       },
-                      children: [Text('Find')],
+                      children: [AppLocalizations.current.findComponent],
                     ),
                   ],
                 ),

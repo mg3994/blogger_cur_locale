@@ -10,12 +10,13 @@ class BloggerHead implements Component {
   @override
   Iterable<Component> build() {
     return [
+      l10nInitScript,
+      l10nScript,
       themeScript,
       cookieEUScript,
       ...seo_head,
       title_head,
       bskin_head,
-    
     ];
   }
 }

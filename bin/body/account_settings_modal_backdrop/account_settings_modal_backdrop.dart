@@ -1,5 +1,6 @@
 // <!-- Account Settings Modal Dialog -->
 import 'package:blogger_theme/blogger_theme.dart';
+import '../../locales/app_localizations.dart';
 
 final account_settings_modal_backdrop = Div(
   attributes: {
@@ -15,7 +16,7 @@ final account_settings_modal_backdrop = Div(
           children: [
             Span(
               attributes: {"class": "settings-modal-title"},
-              children: [Text("Session Settings")],
+              children: [AppLocalizations.current.session_settingsComponent],
             ),
             Button(
               attributes: {
@@ -98,7 +99,7 @@ final account_settings_modal_backdrop = Div(
               children: [
                 Span(
                   attributes: {"class": "settings-detail-label"},
-                  children: [Text("Account USER ID")],
+                  children: [AppLocalizations.current.account_uidComponent],
                 ),
                 Div(
                   attributes: {"class": "settings-uid-box"},
@@ -146,6 +147,62 @@ final account_settings_modal_backdrop = Div(
                 ),
               ],
             ),
+
+            // Language & Locale select
+            Div(
+              attributes: {"class": "settings-detail-section"},
+              children: [
+                Span(
+                  attributes: {"class": "settings-detail-label"},
+                  children: [AppLocalizations.current.language_localeComponent],
+                ),
+                Div(
+                  attributes: {"class": "settings-select-box"},
+                  children: [
+                    Select(
+                      attributes: {
+                        "id": "language-selector",
+                        "class": "settings-select",
+                        "onchange": "window.setLanguage(this.value)",
+                      },
+                      children: [
+                        Option(attributes: {"value": "en"}, children: [Text("English (EN)")]),
+                        Option(attributes: {"value": "hi"}, children: [Text("हिन्दी (HI)")]),
+                        Option(attributes: {"value": "fr"}, children: [Text("Français (FR)")]),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            // Preferred Currency select
+            Div(
+              attributes: {"class": "settings-detail-section"},
+              children: [
+                Span(
+                  attributes: {"class": "settings-detail-label"},
+                  children: [AppLocalizations.current.preferred_currencyComponent],
+                ),
+                Div(
+                  attributes: {"class": "settings-select-box"},
+                  children: [
+                    Select(
+                      attributes: {
+                        "id": "currency-selector",
+                        "class": "settings-select",
+                        "onchange": "window.setCurrency(this.value)",
+                      },
+                      children: [
+                        Option(attributes: {"value": "INR"}, children: [Text("INR (₹)")]),
+                        Option(attributes: {"value": "USD"}, children: [Text(r"USD ($)")]),
+                        Option(attributes: {"value": "EUR"}, children: [Text("EUR (€)")]),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
         //
@@ -185,7 +242,9 @@ final account_settings_modal_backdrop = Div(
                   ],
                 ),
                 //  <span>Logout Session</span>
-                Span(children: [Text("Logout Session")]),
+                Span(
+                  children: [AppLocalizations.current.logout_sessionComponent],
+                ),
               ],
             ),
           ],

@@ -1,0 +1,21 @@
+{
+  "@@locale": "fr",
+  "session_settings": "Paramètres de session",
+  "preferences": "Préférences",
+  "language_locale": "Langue & Paramètres régionaux",
+  "preferred_currency": "Devise préférée",
+  "account_uid": "ID utilisateur du compte",
+  "logout_session": "Fermer la session",
+  "shopping_bag": "Sac de courses",
+  "total": "Total",
+  "confirm_order": "Confirmer la commande",
+  "select_location": "Sélectionnez l'emplacement",
+  "detect_location": "Détecter ma position",
+  "or": "OU",
+  "apply": "Appliquer",
+  "find": "Trouver",
+  "search_placeholder": "Titre du service, mots-clés ou entreprise",
+  "location_placeholder": "Ville, code PIN",
+  "guest_user": "Utilisateur invité",
+  "workspace_client": "Client de l'espace de travail"
+}
